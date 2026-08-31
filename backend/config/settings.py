@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'accounts',
     'rest_framework.authtoken',
-    'djoser'
+    'djoser',
+    'listings'
 ]
 
 MIDDLEWARE = [
