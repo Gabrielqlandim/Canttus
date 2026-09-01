@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework.authtoken',
     'djoser',
-    'listings'
+    'listings',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 
+        'listings.paginations.ImovelPagination', 
 }
 
 DJOSER = {
