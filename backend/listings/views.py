@@ -35,4 +35,8 @@ class ImovelViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     def perform_create(self, serializer):
+
+        if not (self.request.user.is_host):
+            self.request.user.is_host = True
+            self.request.user.save()
         serializer.save(anfitriao=self.request.user)
