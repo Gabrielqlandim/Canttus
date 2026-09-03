@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'djoser',
     'listings',
     'django_filters',
-    'bookings'
+    'bookings',
+    'reviews'
 ]
 
 MIDDLEWARE = [
