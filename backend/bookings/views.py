@@ -3,6 +3,7 @@ from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .serializers import ReservaSerializer
+from django.core.mail import send_mail
 from .models import Reserva
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -29,6 +30,7 @@ class ReservaViewSet(viewsets.ModelViewSet):
     @action(detail = True, methods=['post'])
     def confirmar(self, request, pk=None):
         reserva = self.get_object()
+
         if request.user != reserva.imovel_reservado.anfitriao:
             return Response(
                 {'detail': 'Só o anfitrião pode confirmar essa reserva.'},
@@ -42,12 +44,20 @@ class ReservaViewSet(viewsets.ModelViewSet):
             )
         reserva.status_reserva = Reserva.Status_reserva.CONFIRMADA
         reserva.save()
+
+        destinatario = reserva.usuario_inquilino
+        send_mail(
+            subject='Reserva confirmada',
+            message=f'A reserva #{reserva.id} foi confirmada',
+            from_email=None,
+            recipient_list=[destinatario.email],
+        )
+
         return Response({'status': reserva.status_reserva})
     
     @action(detail = True, methods=['post'])
     def cancelar(self, request, pk=None):
         reserva = self.get_object()
-
         cliente = request.user == reserva.usuario_inquilino
         anfitriao = request.user == reserva.imovel_reservado.anfitriao
 
@@ -63,5 +73,13 @@ class ReservaViewSet(viewsets.ModelViewSet):
             )
         reserva.status_reserva = Reserva.Status_reserva.CANCELADA
         reserva.save()
+
+        destinatario = reserva.imovel_reservado.anfitriao if cliente else reserva.usuario_inquilino
+        send_mail(
+            subject='Reserva cancelada',
+            message=f'A reserva #{reserva.id} foi cancelada',
+            from_email=None,
+            recipient_list=[destinatario.email],
+        )
         return Response({'status': reserva.status_reserva})
 
