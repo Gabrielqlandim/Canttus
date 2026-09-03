@@ -20,7 +20,11 @@ class ReservaViewSet(viewsets.ModelViewSet):
         )
 
     def perform_create(self, serializer):
-        serializer.save(usuario_inquilino=self.request.user)
+        dados = serializer.validated_data
+        dias = (dados['check_out'] - dados['check_in']).days
+        diaria_atual = dados['imovel_reservado'].diaria
+        valor_total = dias * diaria_atual
+        serializer.save(usuario_inquilino=self.request.user, valor_diaria = diaria_atual, valor_total=valor_total)
 
     @action(detail = True, methods=['post'])
     def confirmar(self, request, pk=None):

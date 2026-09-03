@@ -13,3 +13,6 @@ class Reserva(models.Model):
     check_out = models.DateField()
     status_reserva = models.CharField(max_length=20, choices= Status_reserva.choices, default = Status_reserva.PENDENTE)
     data_criacao_reserva = models.DateTimeField(auto_now_add=True)
+    valor_diaria = models.DecimalField(max_digits=8, decimal_places=2)
+    valor_total = models.DecimalField(max_digits=10, decimal_places=2)
+    
