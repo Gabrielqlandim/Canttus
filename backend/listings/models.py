@@ -14,3 +14,7 @@ class Imovel(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class ImovelFoto(models.Model):
+    imovel = models.ForeignKey(Imovel, on_delete=models.CASCADE, related_name='fotos')
+    imagem = models.ImageField(upload_to='imoveis_fotos/')

@@ -1,12 +1,26 @@
 from django.shortcuts import render
 from rest_framework import viewsets, filters
-from .serializers import ImovelSerializer
-from .models import Imovel
+from .serializers import ImovelSerializer, ImagemImovelSerializer
+from .models import Imovel, ImovelFoto
 from rest_framework.permissions import IsAuthenticated, AllowAny 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied
 from .permissions import ExigeEmailConfirmado
+
+class ImagemImovelViewSet(viewsets.ModelViewSet):
+    serializer_class = ImagemImovelSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ImovelFoto.objects.filter(imovel__anfitriao = self.request.user)
+
+    def perform_create(self, serializer):
+        imovel = serializer.validated_data['imovel']
+        if imovel.anfitriao != self.request.user:
+            raise PermissionDenied('Você só pode adicionar imagens aos seus próprios imóveis.')
+        serializer.save()
 
 class ImovelViewSet(viewsets.ModelViewSet):
     queryset = Imovel.objects.all()
