@@ -7,6 +7,8 @@ class Reserva(models.Model):
             PENDENTE = 'pendente', 'Pendente'
             CONFIRMADA = 'confirmada', 'Confirmada'
             CANCELADA = 'cancelada', 'Cancelada'
+            CONCLUIDA = 'concluida', 'Concluida'
+
     imovel_reservado = models.ForeignKey(Imovel,on_delete=models.PROTECT ,related_name='imovel_reservado')
     usuario_inquilino = models.ForeignKey(settings.AUTH_USER_MODEL ,on_delete= models.PROTECT, related_name='inquilino')
     check_in = models.DateField()
