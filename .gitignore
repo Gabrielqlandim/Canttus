@@ -15,3 +15,6 @@ frontend/.env
 # Editor / OS
 .vscode/
 .DS_Store
+
+# pydantic e env
+.env
