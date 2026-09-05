@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 export function Login(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-
+    const {setEstaLogado} = useAuth();
+    
     async function handleSubmit(evento:React.FormEvent) {
         evento.preventDefault();
         await login(username, password);
+        setEstaLogado(true);
         navigate('/');
     }
 
