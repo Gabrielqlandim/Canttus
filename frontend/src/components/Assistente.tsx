@@ -16,7 +16,7 @@ export function Assistente() {
 
     return (
         <div>
-        <h2>Assistente Canttus</h2>
+        <h2>Canttinhus IA</h2>
         <form onSubmit={handleSubmit}>
             <input value={pergunta} onChange={(e) => setPergunta(e.target.value)} placeholder="Pergunte sobre imóveis..." />
             <button type="submit" disabled={carregando}>{carregando ? 'Pensando...' : 'Perguntar'}</button>
