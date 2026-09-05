@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { buscarMinhasReservas, confirmarReserva, cancelarReserva } from "../api/reservas";
 import type { Reserva } from '../api/reservas';
-
+import { FormAvaliacao } from "../components/FormAvaliacao";
 export function MinhasReservas(){
     const [reservas, setReservas] = useState<Reserva[]>([]);
     const estaLogado = !!localStorage.getItem('access_token');
@@ -38,6 +38,9 @@ export function MinhasReservas(){
                         {reserva.check_in} até {reserva.check_out} - {reserva.status_reserva} - R$ {reserva.valor_total}
                         <button onClick={() => handleConfirmar(reserva.id)}>Confirmar reserva</button>
                         <button onClick={() => handleCancelar(reserva.id)}>Cancelar reserva</button>
+                        {reserva.status_reserva === 'concluida' && (
+                            <FormAvaliacao reservaId={reserva.id}/>
+                        )}
                     </li>
                 ))}
             </ul>
