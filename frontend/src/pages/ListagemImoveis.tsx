@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { buscarImoveis } from "../api/imoveis";
 import type { Imovel } from "../types/Imovel";
 import { Link } from "react-router-dom";
+import { Assistente } from "../components/assistente";
 export function ListagemImoveis(){
     const [imoveis, setImoveis] = useState<Imovel[]>([]);
 
@@ -15,6 +16,7 @@ export function ListagemImoveis(){
     return(
         <div>
             <h1>Imoveis disponíveis</h1>
+            <Assistente/>
             <ul>
                 {imoveis.map((imovel)=>
                 <li key={imovel.id}>
