@@ -16,6 +16,7 @@ export interface Reserva{
     status_reserva: string;
     valor_diaria: string;
     valor_total: string;
+    ja_avaliada: boolean;
 }
 
 export async function buscarMinhasReservas(): Promise<RespostaPaginada<Reserva>> {

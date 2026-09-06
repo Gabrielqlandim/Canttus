@@ -55,32 +55,49 @@ export function MinhasReservas(){
         <div className="max-w-3xl mx-auto px-6 py-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-6">Minhas Reservas</h1>
             <div className="flex flex-col gap-4">
-                {reservas.map((reserva) => (
-                    <div key={reserva.id} className="bg-white border border-gray-100 rounded-xl shadow-sm p-5">
-                        <div className="flex items-center justify-between mb-2">
-                            <p className="text-gray-700">{reserva.check_in} até {reserva.check_out}</p>
-                            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${corDoStatus(reserva.status_reserva)}`}>
-                                {reserva.status_reserva}
-                            </span>
-                        </div>
-                        <p className="text-green-700 font-bold mb-3">R$ {reserva.valor_total}</p>
-                        <div className="flex gap-2">
-                            <button onClick={() => handleConfirmar(reserva.id)}
-                                className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg">
-                                Confirmar
-                            </button>
-                            <button onClick={() => handleCancelar(reserva.id)}
-                                className="bg-gray-100 hover:bg-red-100 hover:text-red-700 text-sm px-4 py-2 rounded-lg">
-                                Cancelar
-                            </button>
-                        </div>
-                        {reserva.status_reserva === 'concluida' && (
-                            <div className="mt-4 border-t border-gray-100 pt-4">
-                                <FormAvaliacao reservaId={reserva.id}/>
+                {reservas.map((reserva) => {
+                    const podeConfirmar = reserva.status_reserva === 'pendente';
+                    const podeCancelar = reserva.status_reserva === 'pendente' || reserva.status_reserva === 'confirmada';
+
+                    return (
+                        <div key={reserva.id} className="bg-white border border-gray-100 rounded-xl shadow-sm p-5">
+                            <div className="flex items-center justify-between mb-2">
+                                <p className="text-gray-700">{reserva.check_in} até {reserva.check_out}</p>
+                                <span className={`text-xs font-semibold px-3 py-1 rounded-full ${corDoStatus(reserva.status_reserva)}`}>
+                                    {reserva.status_reserva}
+                                </span>
                             </div>
-                        )}
-                    </div>
-                ))}
+                            <p className="text-green-700 font-bold mb-3">R$ {reserva.valor_total}</p>
+
+                            {(podeConfirmar || podeCancelar) && (
+                                <div className="flex gap-2">
+                                    {podeConfirmar && (
+                                        <button onClick={() => handleConfirmar(reserva.id)}
+                                            className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg">
+                                            Confirmar
+                                        </button>
+                                    )}
+                                    {podeCancelar && (
+                                        <button onClick={() => handleCancelar(reserva.id)}
+                                            className="bg-gray-100 hover:bg-red-100 hover:text-red-700 text-sm px-4 py-2 rounded-lg">
+                                            Cancelar
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+
+                            {reserva.status_reserva === 'concluida' && (
+                                <div className="mt-4 border-t border-gray-100 pt-4">
+                                    {reserva.ja_avaliada ? (
+                                        <p className="text-sm text-gray-500">Você já avaliou essa estadia. Obrigado!</p>
+                                    ) : (
+                                        <FormAvaliacao reservaId={reserva.id}/>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
