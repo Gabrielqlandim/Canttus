@@ -21,7 +21,7 @@ describe('Login', () => {
 
     fireEvent.change(screen.getByPlaceholderText('Usuário'), { target: { value: 'gabriel' } });
     fireEvent.change(screen.getByPlaceholderText('Senha'), { target: { value: 'SenhaForte123!' } });
-    fireEvent.click(screen.getByText('Entrar'));
+    fireEvent.click(screen.getByRole('button', { name: 'Entrar' }));
 
     await waitFor(() => {
       expect(apiAuth.login).toHaveBeenCalledWith('gabriel', 'SenhaForte123!');

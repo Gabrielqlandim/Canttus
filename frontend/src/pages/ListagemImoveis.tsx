@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { buscarImoveis } from "../api/imoveis";
 import type { Imovel } from "../types/Imovel";
 import { Link } from "react-router-dom";
-import { Assistente } from "../components/assistente";
+
+
 export function ListagemImoveis(){
     const [imoveis, setImoveis] = useState<Imovel[]>([]);
 
@@ -14,15 +15,29 @@ export function ListagemImoveis(){
         carregar();
     }, []);
     return(
-        <div>
-            <h1>Imoveis disponíveis</h1>
-            <Assistente/>
-            <ul>
-                {imoveis.map((imovel)=>
-                <li key={imovel.id}>
-                    <Link to={`/imoveis/${imovel.id}`}> {imovel.titulo}</Link> - {imovel.cidade} - R${imovel.diaria}/noite
-                </li>)}
-            </ul>
+        <div className="max-w-6xl mx-auto px-6 py-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-6">Imóveis disponíveis</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {imoveis.map((imovel) => (
+                    <Link
+                        key={imovel.id}
+                        to={`/imoveis/${imovel.id}`}
+                        className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100"
+                    >
+                        <div className="h-40 bg-green-50 flex items-center justify-center text-green-600 text-sm">
+                            Sem foto
+                        </div>
+                        <div className="p-4">
+                            <h2 className="font-semibold text-gray-900">{imovel.titulo}</h2>
+                            <p className="text-sm text-gray-500">{imovel.cidade}</p>
+                            <p className="mt-2 text-green-700 font-bold">
+                                R$ {imovel.diaria}<span className="text-gray-400 font-normal text-sm"> /noite</span>
+                            </p>
+                        </div>
+                    </Link>
+                ))}
+            </div>
         </div>
     );
+
 }

@@ -5,9 +5,6 @@ import { ListagemImoveis } from './ListagemImoveis';
 import * as apiImoveis from '../api/imoveis';
 
 vi.mock('../api/imoveis');
-vi.mock('../api/assistente', () => ({
-  perguntarAssistente: vi.fn(),
-}));
 
 describe('ListagemImoveis', () => {
   it('mostra os imóveis retornados pela API', async () => {
