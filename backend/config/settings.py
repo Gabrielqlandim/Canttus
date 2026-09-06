@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework.authtoken',
     'djoser',
+    'drf_spectacular',
     'listings',
     'django_filters',
     'bookings',
@@ -150,8 +151,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_PAGINATION_CLASS': 
-        'listings.paginations.ImovelPagination', 
+    'DEFAULT_PAGINATION_CLASS':
+        'listings.paginations.ImovelPagination',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Canttus API',
+    'DESCRIPTION': 'API do Canttus — aluguel de imóveis por temporada.',
+    'VERSION': '1.0.0',
 }
 
 DJOSER = {
