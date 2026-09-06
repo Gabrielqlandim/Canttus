@@ -42,9 +42,20 @@ export function DetalheImovel(){
     return (
         <div className="max-w-5xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
-                <div className="h-64 bg-green-50 rounded-xl flex items-center justify-center text-green-600 mb-6">
-                    Sem foto
+                <div className="h-64 bg-green-50 rounded-xl flex items-center justify-center text-green-600 mb-2 overflow-hidden">
+                    {imovel.fotos[0] ? (
+                        <img src={imovel.fotos[0].imagem} alt={imovel.titulo} className="w-full h-full object-cover" />
+                    ) : (
+                        'Sem foto'
+                    )}
                 </div>
+                {imovel.fotos.length > 1 && (
+                    <div className="flex gap-2 mb-6">
+                        {imovel.fotos.slice(1).map((foto) => (
+                            <img key={foto.id} src={foto.imagem} alt={imovel.titulo} className="w-16 h-16 rounded-lg object-cover" />
+                        ))}
+                    </div>
+                )}
                 <h1 className="text-3xl font-bold text-gray-900">{imovel.titulo}</h1>
                 <p className="text-gray-500 mt-1">{imovel.cidade}</p>
                 <p className="mt-4 text-gray-700">{imovel.descricao}</p>

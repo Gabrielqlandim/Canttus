@@ -6,6 +6,7 @@ import { DetalheImovel } from './pages/DetalheImovel';
 import { Login } from './pages/Login';
 import { MinhasReservas } from './pages/MinhasReservas'
 import { Cadastro } from './pages/Cadastro';
+import { AnunciarImovel } from './pages/AnunciarImovel';
 import { Toaster } from 'react-hot-toast'
 import { Canttinhus } from './components/Canttinhus';
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/minhas-reservas" element={<MinhasReservas/>}/>
         <Route path="/cadastro" element={<Cadastro/>}/>
+        <Route path="/anunciar" element={<AnunciarImovel/>}/>
       </Routes>
       <Canttinhus />
     </AuthProvider>

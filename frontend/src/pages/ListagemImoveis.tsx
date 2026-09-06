@@ -52,8 +52,12 @@ export function ListagemImoveis(){
                             to={`/imoveis/${imovel.id}`}
                             className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100"
                         >
-                            <div className="h-40 bg-green-50 flex items-center justify-center text-green-600 text-sm">
-                                Sem foto
+                            <div className="h-40 bg-green-50 flex items-center justify-center text-green-600 text-sm overflow-hidden">
+                                {imovel.fotos[0] ? (
+                                    <img src={imovel.fotos[0].imagem} alt={imovel.titulo} className="w-full h-full object-cover" />
+                                ) : (
+                                    'Sem foto'
+                                )}
                             </div>
                             <div className="p-4">
                                 <h3 className="font-semibold text-gray-900">{imovel.titulo}</h3>
