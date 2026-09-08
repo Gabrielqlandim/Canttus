@@ -27,8 +27,6 @@ export async function adicionarFotoImovel(imovelId: number, arquivo: File) {
     formData.append('imovel', String(imovelId));
     formData.append('imagem', arquivo);
 
-    const resposta = await api.post('api/fotos/', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const resposta = await api.post('api/fotos/', formData);
     return resposta.data;
 }
